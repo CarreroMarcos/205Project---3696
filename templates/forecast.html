@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+   <link href = "/static/css/style.css" rel = "stylesheet">
+</head>
+<body id = "weatherBody" style = "background-image: url('{{img}}')" >
+  <header>
+
+  <h1>Weather</h1>
+  {% block content %}
+  <form method="POST" action="/">
+    {{ form.csrf_token }}
+    {{ form.city_name.label }}
+    {{ form.city_name(size=32) }}
+    <input type="submit" value="Submit">
+  </form>
+    <br>
+  <nav>
+    <a href="{{url_for('main')}}">Home</a>
+  </nav>
+    <br>
+  </header>
+  {% endblock %}
+  <h1>{{data.name}}</h1>
+  <br><br>  
+  <div class = "container">
+  {% for i in data.list %}
+    <div class ="forecastBox">
+    <div text-align="center">
+    {{weekdays[loop.index-1]}}<br>
+    {{week[loop.index-1]}}<br><br>
+    <i>"{{i.weather[0].description|capitalize}}"</i><br>
+    <div class ="forecastWeather">
+      <ul>
+        <li>Morning {{i.temp.morn|int}}°F</li>
+        <li>Day {{i.temp.day|int}}°F</li>
+        <li>Eve {{i.temp.eve|int}}°F</li>
+        <li>Night {{i.temp.night|int}}°F</li>
+      </ul>
+    
+        Max {{i.temp.max|int}}°F  Min {{i.temp.min|int}}°F <br>
+    </div>
+    Wind Speed: {{i.speed|int}} km/h
+    </div>
+      <div id = "imgBox">
+        <img src = "http://openweathermap.org/img/wn/{{i.weather[0].icon}}@4x.png" id = "weatherImg">
+      </div>
+    </div>
+   {% endfor %}
+    </div>
+</body>
+</html>

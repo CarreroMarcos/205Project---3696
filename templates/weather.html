@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+   <link href = "/static/css/style.css" rel = "stylesheet">
+</head>
+<body id = "weatherBody" style = "background-image: url('{{img}}')" >
+  <header>
+
+  <h1>Weather</h1>
+  {% block content %}
+  <form method="POST" action="/">
+    {{ form.csrf_token }}
+    {{ form.city_name.label }}
+    {{ form.city_name(size=32) }}
+    <input type="submit" value="Submit" placeholder="Search">
+  </form>
+    <br>
+  <nav>
+    <a href="{{url_for('main')}}">Home</a>
+  </nav>
+    <br>
+    <label><input type="radio" checked name ="degreeType" value = "f"id = "{{data.main.temp|round|int}}° F">F</label>
+      <label><input type="radio" name ="degreeType" value = "c" id = "{{((data.main.temp-32)/(1.8))|round|int}}°C">C</label>
+  </header>
+  {% endblock %}
+
+  <br><br>
+    <div id = "weatherCard">
+      <div id = "leftBox">
+        <div id = "cityBox">
+          <h1>{{data.name}} </h1>    
+          <h2>{{data.weather[0].description | capitalize }}</h2>
+
+        </div>
+        <div id = "tempBox">
+          <h1 id = "tempNum">{{data.main.temp|round|int}}° F </h1>
+          
+        </div>
+      </div>
+      <div id = "imgBox">
+        <img src = "http://openweathermap.org/img/wn/{{data.weather[0].icon}}@4x.png" id = "weatherImg">
+
+      </div>
+          <br><br>
+          <a href="{{url_for('displayForeCast')}}"><button>Weekly Forecast</button></a>
+    </div>
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

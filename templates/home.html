@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+    <title>Weather</title>
+    <link href = "/static/css/style.css" rel = "stylesheet">
+</head>
+<body id = "homeBody" style = "background-image: url('https://source.unsplash.com/random/1600x900/?city')">
+  <header>
+
+  <h1>Weather</h1>
+    {% block content %}
+  <form method="POST" action="/">
+      {{ form.csrf_token }}
+      {{ form.city_name.label }}
+      {{ form.city_name(size=32) }}
+      <input type="submit" value="Submit" placeholder="Search">
+    </form>
+    <br> 
+    <nav> 
+      <a href="{{url_for('main')}}">Home</a>
+    </nav>
+    <br>
+    
+<!--       <label><input type="radio" checked name ="degreeType" id = "f">F</label>
+      <label><input type="radio" name ="degreeType" id = "c">C</label> -->
+  </header>
+
+    {% endblock %}
+
+    <p>Your current city is <b>{{current}}</b></p><br>
+  <div id="map"></div>
+    
+  <script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg&callback=initMap">
+</script>
+
+</body>
+</html>

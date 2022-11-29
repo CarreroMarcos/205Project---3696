@@ -1,0 +1,104 @@
+html,body{
+  height: 100%;
+  width: 100%;
+}
+
+header{
+  background: rgba(240, 237, 204, .75);
+  color: rgb(2, 52, 63);
+  text-align: center;
+  padding: 20px;
+}
+
+h1,h2,h3,h4,h5{
+  text-align:center;
+}
+
+#homeBody{
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#weatherBody{
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+#weatherCard{
+  display: flex;
+  border: 2px solid black;
+  width: 525px;
+  height: 250px;
+  color: #F0EDCC;
+  background: rgba(2, 52, 63,.90);
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+
+#cityBox{
+  text-align: center;
+/*   border: 1px solid red; */
+  width: 100%;
+  height: 50%;
+  margin: 0 auto;
+}
+
+#tempBox{
+  text-align: center;
+/*   border: 1px solid red; */
+  width: 100%;
+  height: 50%;
+  margin: 0 auto;
+}
+
+#leftBox{
+  width: 100%;
+  height: 100%;
+}
+
+#imgBox{
+  width: 100%;
+  height: 100%;
+  border: 1px solid red;
+}
+
+#weatherImg{
+  width: 100%;
+  height: 100%;
+}
+
+#map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 50%;
+  /* The width is the width of the web page */
+}
+
+.forecastBox{
+  display:flex;
+  flex-direction:column-reverse;
+  justify-content: center;
+/*   background-color:white; */
+  justify-content: space-between;
+}
+
+.container{
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+  background-color:white;
+  justify-content: space-between;
+  width:auto;
+  overflow-x: scroll;
+}
+
+.forecastWeather{
+}
