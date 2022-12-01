@@ -26,7 +26,6 @@ class City(FlaskForm):
   city_name = StringField('City Name', validators=[DataRequired()])
 
 
-cityName = "Seaside";
 
 # def changeCity(city):
 #   global cityName
@@ -92,18 +91,29 @@ def getCityPicture(name):
   except:
     print("error")
 
+cityName = getCurrentLocation();
+
 
 @app.route('/', methods=('GET', 'POST'))
 def main():
-
+  global cityName
+  cityName = getCurrentLocation();
   form = City()
+  url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&cnt=14&appid={}".format(
+    cityName, weatherApiKey)
 
-  if form.validate_on_submit():
-    global cityName
+  try:
+    r = requests.get(url)
+    data = r.json()
+  except:
+    print('please try again')
+    data = 'error'
+
+  if form.validate_on_submit():  
     cityName = form.city_name.data
     # changeCity(city)
     return redirect('/weather')
-  return render_template('home.html', form=form, current=getCurrentLocation())
+  return render_template('home.html', form=form, current=getCurrentLocation(), data=data)
 
 
 @app.route('/weather', methods=('GET', 'POST'))

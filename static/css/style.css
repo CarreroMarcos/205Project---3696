@@ -67,7 +67,7 @@ h1,h2,h3,h4,h5{
 #imgBox{
   width: 100%;
   height: 100%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 #weatherImg{
@@ -86,15 +86,17 @@ h1,h2,h3,h4,h5{
   display:flex;
   flex-direction:column-reverse;
   justify-content: center;
-/*   background-color:white; */
+  background-color: rgba(2, 52, 63,.75);
+  border: 1px solid black;
   justify-content: space-between;
+  padding: 7px;
 }
 
 .container{
   display:flex;
   flex-direction:row;
   justify-content: center;
-  background-color:white;
+  background-color: white;
   justify-content: space-between;
   width:auto;
   overflow-x: scroll;

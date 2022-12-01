@@ -32,6 +32,29 @@
     {% endblock %}
 
     <p>Your current city is <b>{{current}}</b></p><br>
+
+    <br><br>
+    <div id = "weatherCard">
+      <div id = "leftBox">
+        <div id = "cityBox">
+          <h1>{{data.name}} </h1>    
+          <h2>{{data.weather[0].description | capitalize }}</h2>
+
+        </div>
+        <div id = "tempBox">
+          <h1 id = "tempNum">{{data.main.temp|round|int}}° F </h1>
+          
+        </div>
+      </div>
+      <div id = "imgBox">
+        <img src = "http://openweathermap.org/img/wn/{{data.weather[0].icon}}@4x.png" id = "weatherImg">
+
+      </div>
+          <br><br>
+          <a href="{{url_for('displayForeCast')}}"><button>Weekly Forecast</button></a>
+    </div>
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+  
   <div id="map"></div>
     
   <script async
