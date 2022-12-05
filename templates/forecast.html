@@ -7,7 +7,7 @@
     <title>Weather</title>
    <link href = "/static/css/style.css" rel = "stylesheet">
 </head>
-<body id = "weatherBody" style = "background-image: url('{{img}}')" >
+<body id = "weatherBody" style = "background-image: url('{{img}}')" onload="forecastType()">
   <header>
 
   <h1>Weather</h1>
@@ -25,32 +25,56 @@
     <br>
   </header>
   {% endblock %}
-  <h1>{{data.name}}</h1>
-  <br><br>  
+  <br>
+  <h1>{{data.city.name}} <span id ="titleForecast">7-Day Forecast</span></h1>
   <div class = "container">
   {% for i in data.list %}
     <div class ="forecastBox">
     <div text-align="center">
-    {{weekdays[loop.index-1]}}<br>
+    <h3>{{weekdays[loop.index-1]}}</h3>
     {{week[loop.index-1]}}<br><br>
-    <i>"{{i.weather[0].description|capitalize}}"</i><br>
+    <i>"{{i.weather[0].description|capitalize}}"</i><br><br>
     <div class ="forecastWeather">
-      <ul>
-        <li>Morning {{i.temp.morn|int}}°F</li>
-        <li>Day {{i.temp.day|int}}°F</li>
-        <li>Eve {{i.temp.eve|int}}°F</li>
-        <li>Night {{i.temp.night|int}}°F</li>
-      </ul>
-    
-        Max {{i.temp.max|int}}°F  Min {{i.temp.min|int}}°F <br>
+        <table style="width:100%">
+          <tr>
+            <td><span class ="time">Morning</span></td>
+            <td> <span class ="tempNumber">{{i.temp.morn|int}}°F</span></td>
+          </tr>
+          <tr>
+            <td><span class ="time">Day</span></td>
+            <td> <span class ="tempNumber">{{i.temp.day|int}}°F</span></td>
+          </tr>
+          <tr>
+            <td><span class ="time">Eve</span></td>
+            <td> <span class ="tempNumber">{{i.temp.eve|int}}°F</span></td>
+          </tr>
+          <tr>
+            <td><span class ="time">Night</span></td>
+            <td> <span class ="tempNumber">{{i.temp.night|int}}°F</span></td>
+          </tr>
+        </table>
     </div>
+    High <b class ="tempNumber">{{i.temp.max|int}}°F</b>  Low <b class ="tempNumber">{{i.temp.min|int}}°F</b> <br>
     Wind Speed: {{i.speed|int}} km/h
     </div>
-      <div id = "imgBox">
-        <img src = "http://openweathermap.org/img/wn/{{i.weather[0].icon}}@4x.png" id = "weatherImg">
-      </div>
     </div>
    {% endfor %}
     </div>
+
+    <br>
+
+    <div id ="userDiv">
+    <label for="fType">Choose a forecast range:</label>
+    <select name="fType" id="fType" onchange="forecastType()">
+      <option value="7">7-Day</option>
+      <option value="14">14-Day</option>
+    </select>
+  
+    <label><input type="radio" checked name ="degreeType" value = "f">°F</label>
+    <label><input type="radio" name ="degreeType" value = "c">°C</label>
+    <br><br>  
+    </div>
+  
+    <script src="{{url_for('static', filename='scriptForecast.js')}}"></script>
 </body>
 </html>
