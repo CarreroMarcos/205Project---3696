@@ -4,37 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
     <title>Weather</title>
-    <link href = "/static/css/style.css" rel = "stylesheet">
+   <link href = "/static/css/style.css" rel = "stylesheet">
 </head>
-<body id = "homeBody" style = "background-image: url('https://source.unsplash.com/random/1600x900/?city')">
+<body id = "weatherBody" style = "background-image: url('{{img}}')" >
   <header>
 
   <h1>Weather</h1>
-    {% block content %}
+  {% block content %}
   <form method="POST" action="/">
-      {{ form.csrf_token }}
-      {{ form.city_name.label }}
-      {{ form.city_name(size=32) }}
-      <input type="submit" value="Submit" placeholder="Search">
-      <a href="{{url_for('randCity')}}"><button type="button" id="randButton" class="randButton">Random</button></a>
-    </form>
-    <br> 
-    <nav> 
-      <a href="{{url_for('main')}}">Home</a>
-    </nav>
+    {{ form.csrf_token }}
+    {{ form.city_name.label }}
+    {{ form.city_name(size=32) }}
+    <input type="submit" value="Submit" placeholder="Search">
+  </form>
     <br>
-    
-<!--       <label><input type="radio" checked name ="degreeType" id = "f">F</label>
-      <label><input type="radio" name ="degreeType" id = "c">C</label> -->
+  <nav>
+    <a href="{{url_for('main')}}">Home</a>
+  </nav>
+    <br>
+    <label><input type="radio" checked name ="degreeType" value = "f"id = "{{data.main.temp|round|int}}° F">F</label>
+      <label><input type="radio" name ="degreeType" value = "c" id = "{{((data.main.temp-32)/(1.8))|round|int}}°C">C</label>
   </header>
+  {% endblock %}
 
-    {% endblock %}
-
-    <p>Your current city is <b>{{current}}</b></p><br>
-
-    <br><br>
+  <br><br>
     <div id = "weatherCard">
       <div id = "leftBox">
         <div id = "cityBox">
@@ -55,12 +49,5 @@
           <a href="{{url_for('displayForeCast')}}"><button>Weekly Forecast</button></a>
     </div>
   <script src="{{url_for('static', filename='script.js')}}"></script>
-  
-  <div id="map"></div>
-    
-  <script async
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg&callback=initMap">
-</script>
-
 </body>
 </html>
