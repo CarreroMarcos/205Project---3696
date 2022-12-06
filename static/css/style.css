@@ -71,8 +71,8 @@ h1,h2,h3,h4,h5{
 }
 
 #weatherImg{
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
 }
 
 #map {
@@ -86,21 +86,49 @@ h1,h2,h3,h4,h5{
   display:flex;
   flex-direction:column-reverse;
   justify-content: center;
-  background-color: rgba(2, 52, 63,.75);
+  background-color: rgba(0, 102, 125, 0.962);
   border: 1px solid black;
   justify-content: space-between;
-  padding: 7px;
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+}
+
+.forecastBox:hover {
+  transform: scaleY(1.02);
+  transform: scaleX(1.02);
+  transform-origin: center;
 }
 
 .container{
   display:flex;
   flex-direction:row;
   justify-content: center;
-  background-color: white;
   justify-content: space-between;
-  width:auto;
-  overflow-x: scroll;
+  flex-wrap: wrap;
 }
 
+.tempNumber{
+  justify-content: right;
+  text-align: right;
+}
+
+
 .forecastWeather{
+  text-align: center;
+}
+
+.time{
+  text-align: left;
+}
+
+#userDiv{
+  background-color: white;
+  border: 1px solid black;
+  width: fit-content;
+  height: fit-content;
+  padding: 20px;
+  margin: auto;
 }
