@@ -36,7 +36,7 @@ class City(FlaskForm):
 cities = []
 
 #set this to get the # of weeks for forecast
-weeks = 1
+weeks = 2
 
 
 def getWeekdays(weekCount):
@@ -135,7 +135,7 @@ def main():
 def randCity():
   global cityName
   randCode = [48322,11419,55082,18015,60120]
-  randZip = randCode[random.randint(0,5)]
+  randZip = randCode[random.randint(0,4)]
   
   url = "https://api.openweathermap.org/data/2.5/weather?zip={}&units=imperial&appid={}".format(randZip, weatherApiKey)
   img = "https://source.unsplash.com/random/1600x900/?" + cityName
