@@ -1,8 +1,8 @@
 from flask import Flask, render_template, flash, redirect, request, jsonify
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from flask_googlemaps import GoogleMaps
-from flask_googlemaps import Map
+# from flask_googlemaps import GoogleMaps
+# from flask_googlemaps import Map
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from datetime import datetime
@@ -22,11 +22,15 @@ bootstrap = Bootstrap(app)
 
 weatherApiKey = '0779b698eafe3111d7cd9c4a487dd8e6'
 # app.config['GOOGLEMAPS_KEY'] = 'AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg'
-GoogleMaps(app, key="AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg")
+# GoogleMaps(app, key="AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg")
 
 
 class City(FlaskForm):
   city_name = StringField('City Name', validators=[DataRequired()])
+
+class Coord(FlaskForm):
+  lat = StringField("Lat", validators=[DataRequired()])
+  lon = StringField("Lon", validators=[DataRequired()])
 
 
 # def changeCity(city):
@@ -104,6 +108,8 @@ def getCityPicture(name):
 
 
 cityName = getCurrentLocation()
+lat = 37.338207;
+lon = -121.886330;
 
 
 @app.route('/', methods=('GET', 'POST'))
@@ -137,6 +143,7 @@ def randCity():
   randCode = [48322,11419,55082,18015,60120]
   randZip = randCode[random.randint(0,4)]
   
+  
   url = "https://api.openweathermap.org/data/2.5/weather?zip={}&units=imperial&appid={}".format(randZip, weatherApiKey)
   img = "https://source.unsplash.com/random/1600x900/?" + cityName
   form = City()
@@ -144,10 +151,11 @@ def randCity():
     r = requests.get(url)
     data = r.json()
     
-      
+    
   except:
     print('please try again')
     data = 'error'
+  cityName = data["name"]
   if form.validate_on_submit():
     cityName = form.city_name.data
     # changeCity(city)
@@ -195,31 +203,76 @@ def displayForeCast():
                          week=week,
                          weekdays=weekdays)
 
+@app.route('/coordsForecast', methods=('GET', 'POST'))
+def displayCoordsForeCast():
+  img = "https://source.unsplash.com/random/1600x900/?" + cityName
+  url = "https://pro.openweathermap.org/data/2.5/forecast/climate?lat={}&lon={}&units=imperial&appid={}".format( lat, lon, weatherApiKey)
+  form = City()
+  try:
+    r = requests.get(url)
+    data = r.json()
+  except:
+    print('please try again')
+    data = 'error'
 
-@app.route("/map")
-def mapview():
-  # creating a map in the view
-  mymap = Map(identifier="view-side",
-              lat=37.4419,
-              lng=-122.1419,
-              markers=[(37.4419, -122.1419)])
-  sndmap = Map(identifier="sndmap",
-               lat=37.4419,
-               lng=-122.1419,
-               markers=[{
-                 'icon':
-                 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                 'lat': 37.4419,
-                 'lng': -122.1419,
-                 'infobox': "<b>Hello World</b>"
-               }, {
-                 'icon':
-                 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-                 'lat': 37.4300,
-                 'lng': -122.1400,
-                 'infobox': "<b>Hello World from other place</b>"
-               }])
-  return render_template('example.html', mymap=mymap, sndmap=sndmap)
+  return render_template('forecast.html',
+                         data=data,
+                         img=img,
+                         form=form,
+                         week=week,
+                         weekdays=weekdays)
+
+@app.route('/map', methods=('GET', 'POST'))
+def coordsRoute():
+  global cityName
+  global lat
+  global lon
+  cityName = getCurrentLocation()
+  form = Coord();
+  url = "https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&units=imperial&appid={}".format( lat, lon, weatherApiKey)
+
+  try:
+    r = requests.get(url)
+    data = r.json()      
+  except:
+    print('please try again')
+    data = 'error'
+
+  if form.validate_on_submit():
+    lat = form.lat.data
+    lon = form.lon.data
+    # changeCity(city)
+    return redirect('/map')
+  return render_template('mapWeather.html',
+                         form=form,
+                         current=getCurrentLocation(),
+                         data=data, lat=lat,lon=lon)
+
+
+# @app.route("/map")
+# def mapview():
+#   # creating a map in the view
+#   mymap = Map(identifier="view-side",
+#               lat=37.4419,
+#               lng=-122.1419,
+#               markers=[(37.4419, -122.1419)])
+#   sndmap = Map(identifier="sndmap",
+#                lat=37.4419,
+#                lng=-122.1419,
+#                markers=[{
+#                  'icon':
+#                  'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+#                  'lat': 37.4419,
+#                  'lng': -122.1419,
+#                  'infobox': "<b>Hello World</b>"
+#                }, {
+#                  'icon':
+#                  'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+#                  'lat': 37.4300,
+#                  'lng': -122.1400,
+#                  'infobox': "<b>Hello World from other place</b>"
+#                }])
+#   return render_template('example.html', mymap=mymap, sndmap=sndmap)
 
 
 app.run(host='0.0.0.0', port=8080)

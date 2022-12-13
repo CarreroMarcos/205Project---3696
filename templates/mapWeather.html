@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+    <title>Weather</title>
+    <link href = "/static/css/style.css" rel = "stylesheet">
+</head>
+<body id = "homeBody" style = "background-image: url('https://source.unsplash.com/random/1600x900/?city')">
+  <header>
+
+  <h1>Weather</h1>
+    {% block content %}
+  <form method="POST" action="/map">
+      {{ form.csrf_token }}
+      {{ form.lat.label }}
+      {{ form.lat(size=32) }}
+      {{ form.lon.label }}
+      {{ form.lon(size=32) }}
+      <input type="submit" value="Submit" placeholder="Search">
+      <a href="{{url_for('randCity')}}"><button type="button" id="randButton" class="randButton">Random</button></a>
+    </form>
+    <br> 
+    <nav> 
+      <a href="{{url_for('main')}}">Home</a>
+    </nav>
+    <br>
+    
+<!--       <label><input type="radio" checked name ="degreeType" id = "f">F</label>
+      <label><input type="radio" name ="degreeType" id = "c">C</label> -->
+  </header>
+
+    {% endblock %}
+
+    <p>Your current city is <b>{{current}}</b></p><br>
+
+    <br><br>
+    <div id = "mapBox">
+        <div id="dvMap" style="width: 500px; height: 500px"></div>
+        <div id = "weatherCoordCard">
+        <div id = "leftBox">
+            <div id = "cityBox">
+            <h1>{{data.name}} </h1>    
+            <h2>{{data.weather[0].description | capitalize }}</h2>
+
+            </div>
+            <div id = "tempBox">
+            <h1 id = "tempNum">{{data.main.temp|round|int}}° F </h1>
+            
+            </div>
+        </div>
+        <div id = "imgBox">
+            <img src = "http://openweathermap.org/img/wn/{{data.weather[0].icon}}@4x.png" id = "weatherImg">
+
+        </div>
+            <br><br>
+            <a href="{{url_for('displayCoordsForeCast')}}"><button>Weekly Forecast</button></a>
+        </div>
+    
+
+    </div>
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+  
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg&sensor=false"></script>
+<script type="text/javascript">
+    var markers = [
+        {
+            "title": '{{data.name}}',
+            "lat": '{{lat}}',
+            "lng": '{{lon}}',
+            "description" : '{{data.name}}'
+            
+        },
+
+    ];
+    window.onload = function () {
+        var mapOptions = {
+          center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+          zoom: 0,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var infoWindow = new google.maps.InfoWindow();
+        var latlngbounds = new google.maps.LatLngBounds();
+        var geocoder = geocoder = new google.maps.Geocoder();
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        for (var i = 0; i < markers.length; i++) {
+          var data = markers[i]
+          var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+          var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: data.title,
+            draggable: true,
+            animation: google.maps.Animation.DROP
+          });
+          (function (marker, data) {
+            google.maps.event.addListener(marker, "click", function (e) {
+              infoWindow.setContent(data.description);
+              infoWindow.open(map, marker);
+            });
+            google.maps.event.addListener(marker, "dragend", function (e) {
+              var lat, lng, address;
+              geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  lat = marker.getPosition().lat();
+                  lng = marker.getPosition().lng();
+                  address = results[0].formatted_address;
+                  // alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
+                  document.getElementById("lat").value = lat;
+                  document.getElementById("lon").value = lng;
+                  markers.description = address;
+                }
+              });
+            });
+          })(marker, data);
+          latlngbounds.extend(marker.position);
+        }
+        var bounds = new google.maps.LatLngBounds();
+        map.setCenter(latlngbounds.getCenter());
+        map.setZoom(7);
+      }
+</script>
+
+
+</body>
+</html>

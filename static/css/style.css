@@ -29,8 +29,8 @@ h1,h2,h3,h4,h5{
 #weatherCard{
   display: flex;
   border: 2px solid black;
-  width: 525px;
-  height: 250px;
+  /* width: 525px;
+  height: 250px; */
   color: #F0EDCC;
   background: rgba(2, 52, 63,.90);
   display: flex;
@@ -45,22 +45,22 @@ h1,h2,h3,h4,h5{
 
 #cityBox{
   text-align: center;
-/*   border: 1px solid red; */
+
   width: 100%;
-  height: 50%;
+  height: 65%;
   margin: 0 auto;
 }
 
 #tempBox{
   text-align: center;
-/*   border: 1px solid red; */
+
   width: 100%;
   height: 50%;
   margin: 0 auto;
 }
 
 #leftBox{
-  width: 100%;
+  width: 120%;
   height: 100%;
 }
 
@@ -83,10 +83,11 @@ h1,h2,h3,h4,h5{
 }
 
 .forecastBox{
+  color: white;
   display:flex;
   flex-direction:column-reverse;
   justify-content: center;
-  background-color: rgba(0, 102, 125, 0.962);
+  background: rgba(2, 52, 63,.90);
   border: 1px solid black;
   justify-content: space-between;
   padding: 10px;
@@ -131,4 +132,26 @@ h1,h2,h3,h4,h5{
   height: fit-content;
   padding: 20px;
   margin: auto;
+  border-radius: 20px;
+}
+
+#dvMap{
+  padding: 50px;
+}
+
+#mapBox{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#weatherCoordCard{
+  display: flex;
+  border: 2px solid black;
+  width: 525px;
+  height: 250px;
+  color: #F0EDCC;
+  background: rgba(2, 52, 63,.90);
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
