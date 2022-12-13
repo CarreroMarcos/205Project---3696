@@ -16,13 +16,10 @@
     {{ form.csrf_token }}
     {{ form.city_name.label }}
     {{ form.city_name(size=32) }}
-    <input type="submit" value="Submit">
+    {% include 'searchBtns.html' %}
   </form>
     <br>
-  <nav>
-    <a href="{{url_for('main')}}">Home</a>
-  </nav>
-    <br>
+    {% include 'nav.html' %}
   </header>
   {% endblock %}
   <br>
