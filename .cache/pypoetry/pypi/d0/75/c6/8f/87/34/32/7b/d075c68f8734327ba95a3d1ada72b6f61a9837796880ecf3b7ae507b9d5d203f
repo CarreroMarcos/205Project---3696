@@ -1,0 +1,1 @@
+9999999999{"name": "mkdocs-minify-plugin", "version": "0.3.0", "summary": "An MkDocs plugin to minify HTML and/or JS files prior to being written to disk", "platform": "", "requires_dist": ["mkdocs (>=1.0.4)", "htmlmin (>=0.1.4)", "jsmin (>=2.2.2)"], "requires_python": ">=2.7", "files": [], "_cache_version": "1.0.0"}

@@ -1,0 +1,1 @@
+9999999999{"name": "Markdown", "version": "3.3.7", "summary": "Python implementation of Markdown.", "platform": null, "requires_dist": ["importlib-metadata (>=4.4) ; python_version < \"3.10\"", "coverage ; extra == 'testing'", "pyyaml ; extra == 'testing'"], "requires_python": ">=3.6", "files": [], "_cache_version": "1.0.0"}

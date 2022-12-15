@@ -1,0 +1,1 @@
+9999999999{"name": "ghp-import", "version": "2.1.0", "summary": "Copy your docs directly to the gh-pages branch.", "platform": null, "requires_dist": ["python-dateutil (>=2.8.1)", "twine ; extra == 'dev'", "markdown ; extra == 'dev'", "flake8 ; extra == 'dev'", "wheel ; extra == 'dev'"], "requires_python": "", "files": [], "_cache_version": "1.0.0"}

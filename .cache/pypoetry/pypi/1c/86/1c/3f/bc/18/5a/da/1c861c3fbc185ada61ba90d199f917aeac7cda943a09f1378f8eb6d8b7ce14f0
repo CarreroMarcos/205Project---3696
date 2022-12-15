@@ -1,0 +1,1 @@
+9999999999{"name": "pyyaml_env_tag", "version": "0.1", "summary": "A custom YAML tag for referencing environment variables in YAML files. ", "platform": "", "requires_dist": ["pyyaml"], "requires_python": ">=3.6", "files": [], "_cache_version": "1.0.0"}

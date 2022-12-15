@@ -1,0 +1,1 @@
+9999999999{"name": "watchdog", "version": "2.1.9", "summary": "Filesystem events monitoring", "platform": null, "requires_dist": ["PyYAML (>=3.10) ; extra == 'watchmedo'"], "requires_python": ">=3.6", "files": [], "_cache_version": "1.0.0"}
