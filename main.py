@@ -1,9 +1,25 @@
 # Authors: Marcos Carrero, Gerardo Solis, Anisha Jadhav, Joseph Arredondo
 # Abstract:
 # Fall 2022
+
+#Work disrubution:
+
 #Joseph Arredondo:
 #Functions: getWeekdways, getWeek, getCurrentLocation,displayForecast
 #File: forecast.html
+
+# Marcos Carrero:
+#Functions: main, displayWeather, coordsRoute, displayCoordsForeCast, GoogleMapsAPI
+#File: home.html, mapWeather.html, weather.html searchBtns.html, nav.html
+
+#Gerardo Solis:
+#Functions: randCity
+#File: randWether.html
+
+#Anisha Jadhav:
+#Functions: login, logout, signup
+#File: login.html, signupp.html
+
 
 from flask import Flask, render_template, flash, redirect, request, jsonify, session, url_for
 from flask_bootstrap import Bootstrap
