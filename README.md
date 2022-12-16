@@ -1,12 +1,13 @@
-README file
+# CSUMB FALL 2022 - CST 205 Final Project
+
 # Flask Weather Website  
 Flask Weather app. Created with the use of OpenWeatherAPI and GoogleMapsAPI.  
 
-## Team members:   
-Marcos Carrero   
-Gerardo Solis   
-Anisha Jadhav  
-Joseph Arredondo  
+## Contributors:   
+* Marcos Carrero   
+* Gerardo Solis   
+* Anisha Jadhav  
+* Joseph Arredondo  
 
 ## Class: CST 205
 
@@ -22,8 +23,8 @@ This a flask app. Once it is running in Visual Studio Code. The Terminal should 
 (https://trello.com/invite/b/DuqHqVbD/ATTI7fa197227b4d0ed6076bb352543968254BEB97F6/project-board-3696) 
 
 ## Future work:  
-Adding user sessions  
-Adding user history  
-Adding a "add to watch list" feature   
-Allowing users to input zip codes   
-Add more validation to user input  
+* Adding user sessions  
+* Adding user history  
+* Adding a "add to watch list" feature   
+* Allowing users to input zip codes   
+* Add more validation to user input  
