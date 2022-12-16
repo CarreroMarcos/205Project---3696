@@ -24,8 +24,7 @@
 from flask import Flask, render_template, flash, redirect, request, jsonify, session, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-# from flask_googlemaps import GoogleMaps
-# from flask_googlemaps import Map
+
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from datetime import datetime
@@ -45,21 +44,16 @@ app.config['SECRET_KEY'] = 'csumb-otter'
 bootstrap = Bootstrap(app)
 
 weatherApiKey = '0779b698eafe3111d7cd9c4a487dd8e6'
-# app.config['GOOGLEMAPS_KEY'] = 'AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg'
-# GoogleMaps(app, key="AIzaSyDHHAdcVxD1s6y6CrUHN4dnaaE0Mxgv2Sg")
 
-
+#Flask Form for city search
 class City(FlaskForm):
   city_name = StringField('City Name', validators=[DataRequired()])
 
+#flask Form for Map/coords search
 class Coord(FlaskForm):
   lat = StringField("Lat", validators=[DataRequired()])
   lon = StringField("Lon", validators=[DataRequired()])
 
-
-# def changeCity(city):
-#   global cityName
-#   cityName = city
 
 cities = []
 
@@ -88,7 +82,7 @@ def getWeekdays(weekCount):
 
 weekdays = getWeekdays(weeks)
 
-
+# get week
 def getWeek(weekCount):
   week = []
   #get the current day
@@ -109,7 +103,7 @@ week = getWeek(weeks)
 
 days = 7 * weeks
 
-
+# Get user location
 def getCurrentLocation():
   try:
     url = 'http://ipinfo.io/json'
@@ -119,7 +113,7 @@ def getCurrentLocation():
   except:
     print("error")
 
-
+#random city background picture
 def getCityPicture(name):
   try:
     url = "https://pixabay.com/api/?key=23607434-f985c753fecbdf81bcf90a5d6&q=" + name + "&image_type=photo&per_page=5"
@@ -135,7 +129,7 @@ cityName = getCurrentLocation()
 lat = 37.338207;
 lon = -121.886330;
 
-
+# Home Page
 @app.route('/', methods=('GET', 'POST'))
 def main():
   global cityName
@@ -160,7 +154,7 @@ def main():
                          current=getCurrentLocation(),
                          data=data)
 
-
+# Random city
 @app.route('/random', methods=('GET', 'POST'))
 def randCity():
   global cityName
@@ -190,6 +184,7 @@ def randCity():
                          img=img,
                          data=data)
   
+# Display weather for search result
 @app.route('/weather', methods=('GET', 'POST'))
 def displayWeather():
   # city = cities[0]
@@ -206,7 +201,7 @@ def displayWeather():
 
   return render_template('weather.html', data=data, img=img, form=form)
 
-
+# Displays forecast for selected city
 @app.route('/forecast', methods=('GET', 'POST'))
 def displayForeCast():
   img = "https://source.unsplash.com/random/1600x900/?" + cityName
@@ -227,6 +222,7 @@ def displayForeCast():
                          week=week,
                          weekdays=weekdays)
 
+# Displays forecast for city searched by coords
 @app.route('/coordsForecast', methods=('GET', 'POST'))
 def displayCoordsForeCast():
   img = "https://source.unsplash.com/random/1600x900/?" + cityName
@@ -246,6 +242,7 @@ def displayCoordsForeCast():
                          week=week,
                          weekdays=weekdays)
 
+# Search by Google Maps Route
 @app.route('/map', methods=('GET', 'POST'))
 def coordsRoute():
   global cityName
@@ -272,6 +269,7 @@ def coordsRoute():
                          current=getCurrentLocation(),
                          data=data, lat=lat,lon=lon)
 
+# Login page
 @app.route('/login', methods=["GET","POST"])
 def login():
  
@@ -302,6 +300,7 @@ def login():
   else:
     return render_template("login.html")
 
+# SignUp page
 @app.route("/signup",methods=["GET","POST"])
 def signup():
   if request.method == "POST":
@@ -332,6 +331,7 @@ def signup():
 
       return render_template("signupp.html",user_name=user_name,error=error)
 
+# Logout route
 @app.route("/logout",methods=["GET","POST"])
 def logout():
   session.pop("first_name", None)
