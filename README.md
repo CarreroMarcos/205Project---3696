@@ -14,7 +14,7 @@ Flask Weather app. Created with the use of OpenWeatherAPI and GoogleMapsAPI.
 ## 12/14/2022
 
 ## How to run program:  
-This a flask app. Once it is running in Visual Studio Code. The Terminal should display the addresses the webpage is running on. Default could be http://127.0.0.1:8080.
+This a flask app. All packages must be installed to run. Once it is running in Visual Studio Code. The Terminal should display the addresses the webpage is running on. Default could be http://127.0.0.1:8080.
 
 ## Link to GitHub repository:
 (https://github.com/CarreroMarcos/205Project---3696)
