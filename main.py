@@ -1,4 +1,11 @@
-from flask import Flask, render_template, flash, redirect, request, jsonify
+# Authors: Marcos Carrero, Gerardo Solis, Anisha Jadhav, Joseph Arredondo
+# Abstract:
+# Fall 2022
+#Joseph Arredondo:
+#Functions: getWeekdways, getWeek, getCurrentLocation,displayForecast
+#File: forecast.html
+
+from flask import Flask, render_template, flash, redirect, request, jsonify, session, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 # from flask_googlemaps import GoogleMaps
@@ -12,6 +19,7 @@ import json
 import random
 from urllib.request import urlopen
 from datetime import datetime, timedelta
+
 
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -248,31 +256,73 @@ def coordsRoute():
                          current=getCurrentLocation(),
                          data=data, lat=lat,lon=lon)
 
+@app.route('/login', methods=["GET","POST"])
+def login():
+ 
+  if request.method == "POST":
+      email = request.form.get("email")
+      password = request.form.get("password")
+      print(email,password)
+      conn = mysql.connect()
+      cur = conn.cursor()
+      cur.execute("select * from authentication where email=%s;",[email])
+      data = cur.fetchone()
+      cur.close()
+      conn.close()
+      if data != None:
+          if data[4] == password:
+              session["auth_id"] = data[0]
+              session["first_name"] = data[1]
+              session["last_name"] = data[2]
+              session["email"] = data[3]
+              return redirect(url_for("main"))
+          else:
+              session["error"] = "password doesn't match."
+              return redirect(url_for("login"))
 
-# @app.route("/map")
-# def mapview():
-#   # creating a map in the view
-#   mymap = Map(identifier="view-side",
-#               lat=37.4419,
-#               lng=-122.1419,
-#               markers=[(37.4419, -122.1419)])
-#   sndmap = Map(identifier="sndmap",
-#                lat=37.4419,
-#                lng=-122.1419,
-#                markers=[{
-#                  'icon':
-#                  'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-#                  'lat': 37.4419,
-#                  'lng': -122.1419,
-#                  'infobox': "<b>Hello World</b>"
-#                }, {
-#                  'icon':
-#                  'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-#                  'lat': 37.4300,
-#                  'lng': -122.1400,
-#                  'infobox': "<b>Hello World from other place</b>"
-#                }])
-#   return render_template('example.html', mymap=mymap, sndmap=sndmap)
+      else:
+          session["error"] = "user not exist."
+          return redirect(url_for("login"))
+  else:
+    return render_template("login.html")
+
+@app.route("/signup",methods=["GET","POST"])
+def signup():
+  if request.method == "POST":
+      first_name = request.form.get("first_name")
+      last_name = request.form.get("last_name")
+      email = request.form.get("email")
+      password = request.form.get("password")
+      conn = mysql.connect()
+      cur = conn.cursor()
+      cur.execute(""" select * from authentication where email=%s ; """,[email])
+      data = cur.fetchone()
+      if data == None:
+          cur.execute(''' insert into authentication (first_name,last_name,email,password) values(%s,%s,%s,%s);''',[first_name,last_name,email,password])
+          conn.commit()
+          cur.close()
+          conn.close()
+          return redirect("/home")
+      else:
+          session["error"] = "This Email Address Is Already Exist"
+          return redirect("/signup")
+  else:
+      user_name = session.get("user_name")
+
+      error = ""
+      if session.get("error"):
+          error = session.get("error")
+          session.pop("error", None)
+
+      return render_template("signupp.html",user_name=user_name,error=error)
+
+@app.route("/logout",methods=["GET","POST"])
+def logout():
+  session.pop("first_name", None)
+  session.pop("last_name", None)
+  session.pop("email", None)
+  session.pop("auth_id", None)
+  return redirect(url_for("login"))
 
 
 app.run(host='0.0.0.0', port=8080)
