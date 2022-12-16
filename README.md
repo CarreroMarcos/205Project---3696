@@ -1,5 +1,6 @@
 README file
-# Flask Weather Website
+# Flask Weather Website  
+Flask Weather app. Created with the use of OpenWeatherAPI and GoogleMapsAPI.  
 
 ## Team members:   
 Marcos Carrero   

@@ -1,5 +1,5 @@
 # Authors: Marcos Carrero, Gerardo Solis, Anisha Jadhav, Joseph Arredondo
-# Abstract:
+# Abstract: Flask Weather app. Created with the use of OpenWeatherAPI and GoogleMapsAPI. 
 # Fall 2022
 
 #Work disrubution:
