@@ -291,7 +291,7 @@ def login():
               session["email"] = data[3]
               return redirect(url_for("main"))
           else:
-              session["error"] = "password doesn't match."
+              session["error"] = "password doesn't match!"
               return redirect(url_for("login"))
 
       else:
